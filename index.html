@@ -11,28 +11,31 @@
       margin-top: 100px;
       position: relative;
     }
+    h1 {
+      margin-bottom: 50px;
+    }
+    .button-container {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
     button {
       font-size: 18px;
       padding: 10px 20px;
-      margin: 10px;
       cursor: pointer;
       border: none;
       border-radius: 5px;
-      position: absolute;
+      position: relative;
     }
     #yes-button {
       background-color: #28a745;
       color: #fff;
-      left: 45%;
-      top: 50%;
-      transform: translate(-50%, -50%);
     }
     #no-button {
       background-color: #dc3545;
       color: #fff;
-      left: 55%;
-      top: 50%;
-      transform: translate(-50%, -50%);
     }
     #confirmation-message {
       font-size: 24px;
@@ -51,8 +54,10 @@
 </head>
 <body>
   <h1 id="question">Will You Be My Valentine?</h1>
-  <button id="yes-button">Yes</button>
-  <button id="no-button">No</button>
+  <div class="button-container">
+    <button id="yes-button">Yes</button>
+    <button id="no-button">No</button>
+  </div>
   <div id="confirmation-message"></div>
   <div id="gif-container">
     <p>Yayy!</p>
@@ -66,6 +71,7 @@
     let question = document.getElementById('question');
     let message = document.getElementById('confirmation-message');
     let gifContainer = document.getElementById('gif-container');
+    let buttonContainer = document.querySelector('.button-container');
     
     noButton.addEventListener('click', function() {
       noButtonClickCount++;
@@ -81,6 +87,7 @@
         newY = Math.random() * (window.innerHeight - 50);
       } while (Math.abs(newX - yesButton.offsetLeft) < 100 && Math.abs(newY - yesButton.offsetTop) < 100);
       
+      noButton.style.position = 'absolute';
       noButton.style.left = `${newX}px`;
       noButton.style.top = `${newY}px`;
       
@@ -97,13 +104,10 @@
       // Reset everything to normal
       yesButton.style.fontSize = "18px";
       yesButton.style.padding = "10px 20px";
-      yesButton.style.left = "45%";
-      yesButton.style.top = "50%";
       
       noButton.style.fontSize = "18px";
       noButton.style.padding = "10px 20px";
-      noButton.style.left = "55%";
-      noButton.style.top = "50%";
+      noButton.style.position = "relative";
       
       // Show confirmation message and GIF
       message.textContent = "Great! :DD <33";
