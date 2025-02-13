@@ -23,23 +23,29 @@
     #yes-button {
       background-color: #28a745;
       color: #fff;
-      left: 50%;
-      transform: translateX(-50%);
+      left: 45%;
+      top: 50%;
+      transform: translate(-50%, -50%);
     }
     #no-button {
       background-color: #dc3545;
       color: #fff;
       left: 55%;
+      top: 50%;
+      transform: translate(-50%, -50%);
     }
     #confirmation-message {
       font-size: 24px;
       color: #28a745;
       margin-top: 20px;
       display: none;
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
+    }
+    #gif-container {
+      display: none;
+      margin-top: 50px;
+    }
+    #gif-container img {
+      width: 200px;
     }
   </style>
 </head>
@@ -48,6 +54,10 @@
   <button id="yes-button">Yes</button>
   <button id="no-button">No</button>
   <div id="confirmation-message"></div>
+  <div id="gif-container">
+    <p>Yayy!</p>
+    <img src="https://tenor.com/view/happy-cat-happy-happy-cat-happy-happy-happy-cat-happy-happy-happy-cat-meme-gif-10674288337814969177" alt="Happy Cat GIF">
+  </div>
 
   <script>
     let noButtonClickCount = 0;
@@ -55,6 +65,7 @@
     let yesButton = document.getElementById('yes-button');
     let question = document.getElementById('question');
     let message = document.getElementById('confirmation-message');
+    let gifContainer = document.getElementById('gif-container');
     
     noButton.addEventListener('click', function() {
       noButtonClickCount++;
@@ -63,9 +74,13 @@
       yesButton.style.fontSize = `${18 + noButtonClickCount * 3}px`;
       yesButton.style.padding = `${10 + noButtonClickCount}px ${20 + noButtonClickCount * 2}px`;
       
-      // Move the No button to a random position
-      let newX = Math.random() * (window.innerWidth - 100);
-      let newY = Math.random() * (window.innerHeight - 50);
+      // Move the No button to a random position away from the Yes button
+      let newX, newY;
+      do {
+        newX = Math.random() * (window.innerWidth - 100);
+        newY = Math.random() * (window.innerHeight - 50);
+      } while (Math.abs(newX - yesButton.offsetLeft) < 100 && Math.abs(newY - yesButton.offsetTop) < 100);
+      
       noButton.style.left = `${newX}px`;
       noButton.style.top = `${newY}px`;
       
@@ -79,8 +94,21 @@
     });
 
     yesButton.addEventListener('click', function() {
+      // Reset everything to normal
+      yesButton.style.fontSize = "18px";
+      yesButton.style.padding = "10px 20px";
+      yesButton.style.left = "45%";
+      yesButton.style.top = "50%";
+      
+      noButton.style.fontSize = "18px";
+      noButton.style.padding = "10px 20px";
+      noButton.style.left = "55%";
+      noButton.style.top = "50%";
+      
+      // Show confirmation message and GIF
       message.textContent = "Great! :DD <33";
       message.style.display = "block";
+      gifContainer.style.display = "block";
     });
   </script>
 </body>
